@@ -1,5 +1,5 @@
 {
-    "batch-file": "side-menu.js",
+    "output-file": "lion.js",
     "minify": false,
     "comments": true,
     "batch": true,

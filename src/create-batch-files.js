@@ -1,12 +1,73 @@
 import path from 'path'
 import { readdir, readFile } from 'fs/promises'
 const { resolve } = path
+const { isArray } = Array
 // const rootPath = new URL(path.dirname(import.meta.url)).pathname;
 
-const readBatchConfig = async (batchConfigPath) => {
+const batchConfigDefaults = {
+    minify: false,
+    comments: true,
+    batch: true,
+    ignore: false,
+    watch: true,
+    invalidate: false
+}
 
-    const file = readFile(batchConfigPath, 'utf8', (err, data) => {
-        console.log('read batch config :::', batchConfigPath)
+const configureBatching = async (jsonConfig) => {
+    const config = JSON.parse(jsonConfig)
+    const minify = config.hasOwnProperty('minify') ? config.minify : batchConfigDefaults.minify
+    const comments = config.hasOwnProperty('comments') ? config.comments : batchConfigDefaults.comments
+    const batch = config.hasOwnProperty('batch') ? config.batch : batchConfigDefaults.batch
+    const ignore = config.hasOwnProperty('ignore') ? config.ignore : batchConfigDefaults.ignore
+    const watch = config.hasOwnProperty('watch') ? config.watch : batchConfigDefaults.watch
+    const invalidate = config.hasOwnProperty('invalidate') ? config.invalidate : batchConfigDefaults.invalidate
+    const outputFile = config['output-file'] 
+    const { files } = config
+
+// console.log({
+//     minify,
+//     comments,
+//     batch,
+//     ignore,
+//     watch,
+//     invalidate,
+//     outputFile,
+//     files
+// })
+    // Output file name is required
+    if (outputFile === undefined) {
+        console.error('Missing `output-file`')
+        return
+    }
+
+    // Files are required
+    if (!isArray(files) || files.length < 1) {
+        console.error('Missing `files`')
+        return
+    }
+
+    if (ignore === true) {
+        //@todo check flag to override ignore
+        return
+    }
+
+    // @todo Invalidate
+    // @todo Watch
+    // @todo Comments
+    // @todo Minify
+
+    if(batch === true) {
+        // Bundle files ES
+        console.log('Will bundle for: ', outputFile)
+    } else {
+        // Concatenate files ES
+        console.log('Will concat for: ', outputFile)
+    }
+}
+
+
+const readBatchConfig = async (batchConfigPath) => {
+    const file = await readFile(batchConfigPath, 'utf8', (err, data) => {
         if (err) {
             console.error(err)
             return
@@ -14,7 +75,9 @@ const readBatchConfig = async (batchConfigPath) => {
         return Buffer.from(data)
     })
 
-    console.log(await file)
+
+    // console.log('///READING: ', jsonConfig['output-file'])
+    configureBatching(file)
 }
 
 /**
@@ -30,6 +93,7 @@ const findBatchConfigFiles = async parentDirectory => {
                 yield* findFiles(res)
             } else {
                 if (res.endsWith('batch.json')) {
+
                     readBatchConfig(res)
                     yield res
                 }
@@ -37,9 +101,7 @@ const findBatchConfigFiles = async parentDirectory => {
         }
     }
 
-    for await (const file of findFiles(parentDirectory)) {
-        // console.log(file)
-    }
+    for await (const _ of findFiles(parentDirectory));
 }
 
 const createBatchFiles = parentDirectory => {

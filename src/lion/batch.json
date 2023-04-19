@@ -7,9 +7,8 @@
     "watch": true,
     "invalidate": false,
     "files": [
-      "/header/blabla.js",
-      "header/lala.js",
-      "./feed.js",
-      "nav.js"
+      "one.js",
+      "two.js",
+      "three.js"
     ]
   }

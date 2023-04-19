@@ -1,0 +1,8 @@
+{
+    "output": "module-a.js",
+    "files": [
+        "./one.js",
+        "./two.js",
+        "./three.js"
+    ]
+}

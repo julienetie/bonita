@@ -1,0 +1,33 @@
+{
+  "name": "oxpecker",
+  "version": "0.0.1",
+  "description": "Import Maps Manager",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "import",
+    "maps",
+    "importmaps",
+    "es",
+    "modules",
+    "esmodules",
+    "browser",
+    "package",
+    "manager",
+    "jspm",
+    "npm",
+    "node"
+  ],
+  "author": "Julien Etienne",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}

@@ -29,6 +29,7 @@ batch.json files can be placed in any directory and should list files that are t
     "batch": true,                  // <-- Batch ES modules (default true, false will concatenate only)
     "ignore": false,                // <-- Ignore when building (default false)
     "watch": true,                  // <-- Allow to be watched (default true)
+    "invalidate": false,            // <-- Adds a new hash on each build `parseInt((Date.now() + '').substr(4)).toString(36)`  -e9hych.js
     "files": [                      // <-- Files to batch
       "/header/blabla.js",
       "header/lala.js",

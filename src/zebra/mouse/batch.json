@@ -2,7 +2,7 @@
     "output-file": "mouse.js",
     "minify": true,
     "comments": false,
-    "batch": false,
+    "batch": true,
     "invalidate": true,
     "files": [""]
   }

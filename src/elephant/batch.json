@@ -3,7 +3,7 @@
     "minify": false,
     "comments": true,
     "batch": false,
-    "ignore": false,
+    "ignore": true,
     "watch": true,
     "invalidate": false,
     "files": [

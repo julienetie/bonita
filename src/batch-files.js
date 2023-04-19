@@ -1,17 +1,21 @@
 import { rollup } from 'rollup'
+import path from 'path'
 import multi from '@rollup/plugin-multi-entry'
+const { resolve } = path
+const batchFiles = async (batchList, output, dir) => {
+  // console.log('batchList, file', file, dir)
+  const file = resolve(dir, output)
 
-const build = async () => {
   let bundle
   let buildFailed = false
   try {
     bundle = await rollup({
-      input: ['one.js', 'two.js', 'three.js'],
+      input: batchList.map(item => resolve(dir, item)),
       plugins: [multi()]
     })
     await bundle.write({
       name: 'main',
-      file: './es-out-fn.js',
+      file,
       format: 'es'
     })
   } catch (error) {
@@ -24,4 +28,4 @@ const build = async () => {
   process.exit(buildFailed ? 1 : 0)
 }
 
-build()
+export { batchFiles }

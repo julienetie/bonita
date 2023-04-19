@@ -1,10 +1,4 @@
 {
     "output-file": "zebra.js",
-    "minify": true,
-    "files": [
-      "/header/blabla.js",
-      "header/lala.js",
-      "./feed.js",
-      "nav.js"
-    ]
+    "minify": true
   }

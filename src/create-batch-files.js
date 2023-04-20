@@ -97,7 +97,7 @@ const findBatchConfigFiles = async parentDirectory => {
       }
     }
   }
-
+  // eslint-disable-next-line
   for await (const _ of findFiles(parentDirectory));
 }
 

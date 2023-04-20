@@ -9,7 +9,7 @@ const { resolve, parse } = path
 
 const removeAllStartingWith = async (dir, filenameWithoutExt) => {
   const files = await readdir(dir)
-  //@todo refactor into the async loop
+  // @todo refactor into the async loop
   const filteredFiles = files.filter(file => file.startsWith(filenameWithoutExt))
 
   try {
@@ -31,15 +31,14 @@ const batchFiles = async (
   preserve,
   comments
 ) => {
-
   const filenameWithoutExt = parse(resolve(dir, output)).name
 
   if (invalidate && !preserve) {
     removeAllStartingWith(dir, filenameWithoutExt)
   }
 
-  var hash = parseInt((Date.now() + '').slice(4)).toString(36)
-  const filename = invalidate ? output.replace(/.([^.]*)$/, `\-${hash}.$1`) : output
+  const hash = parseInt((Date.now() + '').slice(4)).toString(36)
+  const filename = invalidate ? output.replace(/.([^.]*)$/, `-${hash}.$1`) : output
   console.log('filename', filename)
   const file = resolve(dir, filename)
   let bundle

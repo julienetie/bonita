@@ -8,7 +8,7 @@ cli.version(process.version)
 cli.option('--type [type]', 'Choose a project type', {
     default: 'node',
 })
-cli.option('--name <name>', 'Provide your name')
+// cli.option('--', 'Provide your name')
 
 cli.help()
 
@@ -17,7 +17,8 @@ cli
     .action((link) => console.log(link))
 
     cli
-    .command('batch <parentDirectory>', 'Create batch files for a given parent directory')
-    .action((parentDirectory) => createBatchFiles(parentDirectory))
+    .command('batch <parentDirectory>', 'Batch files for a given parent directory')
+    .option('-w, --watch', 'Watch and batch files on changes')
+    .action((parentDirectory, options) => createBatchFiles(parentDirectory, options))
 
 cli.parse()

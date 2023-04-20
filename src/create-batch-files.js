@@ -1,6 +1,10 @@
 import path from 'path'
 import { readdir, readFile } from 'fs/promises'
 import { batchFiles } from './batch-files.js'
+// import { watchAndBuild } from './watch-and-build.js'
+import * as url from 'url'
+import { fork } from 'child_process'
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const { resolve, dirname } = path
 const { isArray } = Array
 // const rootPath = new URL(path.dirname(import.meta.url)).pathname;
@@ -21,10 +25,10 @@ const configureBatching = async (jsonConfig, dir) => {
   const config = JSON.parse(jsonConfig)
   console.log('type', typeof config.hasOwn)
   const minify = Object.hasOwn(config, 'minify') ? config.minify : batchConfigDefaults.minify
-  const comments = Object.hasOwn(config,'comments') ? config.comments : batchConfigDefaults.comments
+  const comments = Object.hasOwn(config, 'comments') ? config.comments : batchConfigDefaults.comments
   const batch = Object.hasOwn(config, 'batch') ? config.batch : batchConfigDefaults.batch
   const ignore = Object.hasOwn(config, 'ignore') ? config.ignore : batchConfigDefaults.ignore
-  //   const watch = config.hasOwn('watch') ? config.watch : batchConfigDefaults.watch
+  const watch = Object.hasOwn(config, 'watch') ? config.watch : batchConfigDefaults.watch
   const invalidate = Object.hasOwn(config, 'invalidate') ? config.invalidate : batchConfigDefaults.invalidate
   const preserve = Object.hasOwn(config, 'preserve') ? config.preserve : batchConfigDefaults.preserve
   const outputFile = config.output
@@ -92,13 +96,13 @@ const readBatchConfig = async (batchConfigPath, dir) => {
  * @param {string} parentDirectory
  */
 const findBatchConfigFiles = async parentDirectory => {
-  async function* findFiles(dir) {
+  async function * findFiles (dir) {
     const dirents = await readdir(dir, { withFileTypes: true })
     for (const dirent of dirents) {
       const direntName = dirent.name
       const res = resolve(dir, direntName)
       if (dirent.isDirectory()) {
-        yield* findFiles(res)
+        yield * findFiles(res)
       } else {
         if (direntName.startsWith('.batch') && direntName.endsWith('.json')) {
           readBatchConfig(res, dir)
@@ -112,10 +116,23 @@ const findBatchConfigFiles = async parentDirectory => {
   for await (const _ of findFiles(parentDirectory));
 }
 
-const createBatchFiles = directory => {
-  // Removes * and filename from the path
+const createBatchFiles = (directory, { watch }) => {
+  // Removes * and filename from the path.
   const cleanedDirectory = dirname(directory)
+
+  // Watch for changes flagged
+  if (watch) {
+    const watchAndBuild = fork(resolve(__dirname, './watch-and-build.js'))
+
+    watchAndBuild.on('message', (m) => {
+      console.log('received: ' + m)
+    })
+
+    // Watch and build
+    watchAndBuild.send(cleanedDirectory)
+  }
+
   findBatchConfigFiles(cleanedDirectory)
 }
 
-export { createBatchFiles }
+export { createBatchFiles, findBatchConfigFiles }

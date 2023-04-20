@@ -1,18 +1,25 @@
 import { rollup } from 'rollup'
 import path from 'path'
 import multi from '@rollup/plugin-multi-entry'
+import terser from '@rollup/plugin-terser';
 const { resolve } = path
-const batchFiles = async (batchList, output, dir) => {
+const batchFiles = async (
+  batchList, 
+  output, 
+  dir,
+  minify
+  ) => {
  
   const file = resolve(dir, output)
-  console.log('batchList', file)
-  // console.log('batchList, file', file, dir)
   let bundle
   let buildFailed = false
   try {
     bundle = await rollup({
       input: batchList.map(item => resolve(dir, item)),
-      plugins: [multi()]
+      plugins: [
+        multi(), 
+        minify && terser(),
+      ]
     })
     await bundle.write({
       name: 'main',

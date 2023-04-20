@@ -4,5 +4,6 @@
         "./one.js",
         "./two.js",
         "./three.js"
-    ]
+    ],
+    "minify": false
 }

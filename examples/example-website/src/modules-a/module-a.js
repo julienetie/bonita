@@ -1,4 +1,5 @@
 import React from 'https://esm.sh/react';
+import { eight } from '../modules-b/modules-b-1/eight.js';
 
 const one = () => {
   console.log('Module - one');
@@ -7,6 +8,7 @@ const one = () => {
 
 const two = () => {
   console.log('Module - two');
+  eight();
 };
 
 const three = () => {

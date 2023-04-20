@@ -6,6 +6,8 @@ const { isArray } = Array
 // const rootPath = new URL(path.dirname(import.meta.url)).pathname;
 
 const batchConfigDefaults = {
+    // output
+    // files
     minify: false,
     comments: true,
     batch: true,
@@ -17,7 +19,7 @@ const batchConfigDefaults = {
 const configureBatching = async (jsonConfig, dir) => {
     const config = JSON.parse(jsonConfig)
     console.log('type', typeof config.hasOwn)
-    //   const minify = config.hasOwn('minify') ? config.minify : batchConfigDefaults.minify
+    const minify = Object.hasOwn(config, 'minify') ? config.minify : batchConfigDefaults.minify
     //   const comments = config.hasOwn('comments') ? config.comments : batchConfigDefaults.comments
     const batch = Object.hasOwn(config, 'batch') ? config.batch : batchConfigDefaults.batch
     const ignore = Object.hasOwn(config, 'ignore') ? config.ignore : batchConfigDefaults.ignore
@@ -26,16 +28,6 @@ const configureBatching = async (jsonConfig, dir) => {
     const outputFile = config.output
     const { files } = config
 
-    // console.log({
-    //     minify,
-    //     comments,
-    //     batch,
-    //     ignore,
-    //     watch,
-    //     invalidate,
-    //     outputFile,
-    //     files
-    // })
     // Output file name is required
     if (outputFile === undefined) {
         console.error('Missing `output`')
@@ -61,7 +53,12 @@ const configureBatching = async (jsonConfig, dir) => {
     if (batch === true) {
         // Bundle files ES
         console.log('Will bundle for: ', outputFile)
-        batchFiles(files, outputFile, dir)
+        batchFiles(
+            files, 
+            outputFile, 
+            dir, 
+            minify
+        )
     } else {
         // Concatenate files ES
         console.log('Will concat for: ', outputFile)

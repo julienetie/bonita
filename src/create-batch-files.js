@@ -21,7 +21,7 @@ const configureBatching = async (jsonConfig, dir) => {
   const config = JSON.parse(jsonConfig)
   console.log('type', typeof config.hasOwn)
   const minify = Object.hasOwn(config, 'minify') ? config.minify : batchConfigDefaults.minify
-  //   const comments = config.hasOwn('comments') ? config.comments : batchConfigDefaults.comments
+  const comments = Object.hasOwn(config,'comments') ? config.comments : batchConfigDefaults.comments
   const batch = Object.hasOwn(config, 'batch') ? config.batch : batchConfigDefaults.batch
   const ignore = Object.hasOwn(config, 'ignore') ? config.ignore : batchConfigDefaults.ignore
   //   const watch = config.hasOwn('watch') ? config.watch : batchConfigDefaults.watch
@@ -66,7 +66,8 @@ const configureBatching = async (jsonConfig, dir) => {
       dir,
       minify,
       invalidate,
-      preserve
+      preserve,
+      comments
     )
   } else {
     // Concatenate files ES

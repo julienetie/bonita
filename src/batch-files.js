@@ -2,6 +2,7 @@ import { rollup } from 'rollup'
 import path from 'path'
 import multi from '@rollup/plugin-multi-entry'
 import terser from '@rollup/plugin-terser'
+import cleanup from 'rollup-plugin-cleanup'
 import { readdir, unlink } from 'fs/promises'
 
 const { resolve, parse } = path
@@ -27,7 +28,8 @@ const batchFiles = async (
   dir,
   minify,
   invalidate,
-  preserve
+  preserve,
+  comments
 ) => {
 
   const filenameWithoutExt = parse(resolve(dir, output)).name
@@ -55,7 +57,10 @@ const batchFiles = async (
       input,
       plugins: [
         multi(),
-        minify && terser()
+        minify && terser(),
+        cleanup({
+          comments: comments ? 'all' : 'none'
+        })
       ]
     })
     await bundle.write({

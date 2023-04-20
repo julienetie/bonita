@@ -11,14 +11,23 @@ import chokidar from 'chokidar'
  */
 
 process.on('message', (dirPath) => {
-  const watchAndBuild = (directory) => {
-    console.log(`\n*** ox: Watching ${directory} for changes...`)
-    const watcher = chokidar.watch(directory, { persistent: true })
-    watcher.on('change', path => {
-      console.log('path', path)
-    })
-  }
-  watchAndBuild(dirPath)
-})
+    const watchAndBuild = (directory) => {
+        const watcher = chokidar.watch(directory, { persistent: true })
 
-// export { watchAndBuild }
+        console.log(`\n*** ox: Watching ${directory} for changes...`)
+
+        watcher.on('ready', () => {
+            console.log(`*** ox: Initial scan complete. Watching for changes...`)
+        })
+
+        watcher.on('change', (path) => {
+            console.log(`*** ox: File ${path} has been changed`)
+        })
+
+        watcher.on('error', (error) => {
+            console.log(`*** ox: Error occurred while watching ${directory}: ${error}`)
+        })
+    }
+
+    watchAndBuild(dirPath)
+})

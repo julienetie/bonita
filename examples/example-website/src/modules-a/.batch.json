@@ -7,5 +7,6 @@
     ],
     "minify": false,
     "invalidate": true,
-    "preserve": false
+    "preserve": false,
+    "comments": false
 }

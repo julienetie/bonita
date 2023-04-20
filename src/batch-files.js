@@ -3,9 +3,10 @@ import path from 'path'
 import multi from '@rollup/plugin-multi-entry'
 const { resolve } = path
 const batchFiles = async (batchList, output, dir) => {
-  // console.log('batchList, file', file, dir)
+ 
   const file = resolve(dir, output)
-
+  console.log('batchList', file)
+  // console.log('batchList, file', file, dir)
   let bundle
   let buildFailed = false
   try {

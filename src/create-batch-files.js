@@ -16,13 +16,14 @@ const batchConfigDefaults = {
 
 const configureBatching = async (jsonConfig, dir) => {
   const config = JSON.parse(jsonConfig)
+  console.log('type', typeof config.hasOwn)
   //   const minify = config.hasOwn('minify') ? config.minify : batchConfigDefaults.minify
   //   const comments = config.hasOwn('comments') ? config.comments : batchConfigDefaults.comments
-  const batch = config.hasOwn('batch') ? config.batch : batchConfigDefaults.batch
-  const ignore = config.hasOwn('ignore') ? config.ignore : batchConfigDefaults.ignore
+  const batch = Object.hasOwn(config,'batch') ? config.batch : batchConfigDefaults.batch
+  const ignore = Object.hasOwn(config, 'ignore') ? config.ignore : batchConfigDefaults.ignore
   //   const watch = config.hasOwn('watch') ? config.watch : batchConfigDefaults.watch
   //   const invalidate = config.hasOwn('invalidate') ? config.invalidate : batchConfigDefaults.invalidate
-  const outputFile = config['output-file']
+  const outputFile = config.output
   const { files } = config
 
   // console.log({
@@ -37,7 +38,7 @@ const configureBatching = async (jsonConfig, dir) => {
   // })
   // Output file name is required
   if (outputFile === undefined) {
-    console.error('Missing `output-file`')
+    console.error('Missing `output`')
     return
   }
 
@@ -76,7 +77,6 @@ const readBatchConfig = async (batchConfigPath, dir) => {
     return Buffer.from(data)
   })
 
-  // console.log('///READING: ', jsonConfig['output-file'])
   configureBatching(file, dir)
 }
 
@@ -89,11 +89,11 @@ const findBatchConfigFiles = async parentDirectory => {
     const dirents = await readdir(dir, { withFileTypes: true })
     for (const dirent of dirents) {
       const res = resolve(dir, dirent.name)
-      console.log('dir', dir)
+    //   console.log('dir', res)
       if (dirent.isDirectory()) {
         yield * findFiles(res)
       } else {
-        if (res.endsWith('batch.json')) {
+        if (dirent.name.startsWith('.batch') && dirent.name.endsWith('.json')) {
           readBatchConfig(res, dir)
           yield res
         }

@@ -1,5 +1,5 @@
 const three = () => {
-    console.log('Module - three')
+  console.log('Module - three')
 }
 
-export default three
+export { three }

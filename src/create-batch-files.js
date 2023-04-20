@@ -88,12 +88,12 @@ const findBatchConfigFiles = async parentDirectory => {
     async function* findFiles(dir) {
         const dirents = await readdir(dir, { withFileTypes: true })
         for (const dirent of dirents) {
-            const res = resolve(dir, dirent.name)
-            //   console.log('dir', res)
+            const direntName = dirent.name
+            const res = resolve(dir, direntName)
             if (dirent.isDirectory()) {
                 yield* findFiles(res)
             } else {
-                if (dirent.name.startsWith('.batch') && dirent.name.endsWith('.json')) {
+                if (direntName.startsWith('.batch') && direntName.endsWith('.json')) {
                     readBatchConfig(res, dir)
                     yield res
                 }
@@ -105,7 +105,7 @@ const findBatchConfigFiles = async parentDirectory => {
 }
 
 const createBatchFiles = directory => {
-    // Removes * and filenames from the path
+    // Removes * and filename from the path
     const cleanedDirectory = dirname(directory)
     findBatchConfigFiles(cleanedDirectory)
 }

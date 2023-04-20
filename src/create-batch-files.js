@@ -13,7 +13,8 @@ const batchConfigDefaults = {
   batch: true,
   ignore: false,
   watch: true,
-  invalidate: false
+  invalidate: false,
+  preserve: false
 }
 
 const configureBatching = async (jsonConfig, dir) => {
@@ -24,13 +25,20 @@ const configureBatching = async (jsonConfig, dir) => {
   const batch = Object.hasOwn(config, 'batch') ? config.batch : batchConfigDefaults.batch
   const ignore = Object.hasOwn(config, 'ignore') ? config.ignore : batchConfigDefaults.ignore
   //   const watch = config.hasOwn('watch') ? config.watch : batchConfigDefaults.watch
-  //   const invalidate = config.hasOwn('invalidate') ? config.invalidate : batchConfigDefaults.invalidate
+  const invalidate = Object.hasOwn(config, 'invalidate') ? config.invalidate : batchConfigDefaults.invalidate
+  const preserve = Object.hasOwn(config, 'preserve') ? config.preserve : batchConfigDefaults.preserve
   const outputFile = config.output
   const { files } = config
 
   // Output file name is required
   if (outputFile === undefined) {
     console.error('Missing `output`')
+    return
+  }
+
+  // Output file name must start with an underscore
+  if (outputFile.at() !== '_') {
+    console.error('Output file name must start with an underscore.')
     return
   }
 
@@ -48,7 +56,6 @@ const configureBatching = async (jsonConfig, dir) => {
   // @todo Invalidate
   // @todo Watch
   // @todo Comments
-  // @todo Minify
 
   if (batch === true) {
     // Bundle files ES
@@ -57,7 +64,9 @@ const configureBatching = async (jsonConfig, dir) => {
       files,
       outputFile,
       dir,
-      minify
+      minify,
+      invalidate,
+      preserve
     )
   } else {
     // Concatenate files ES
@@ -82,13 +91,13 @@ const readBatchConfig = async (batchConfigPath, dir) => {
  * @param {string} parentDirectory
  */
 const findBatchConfigFiles = async parentDirectory => {
-  async function * findFiles (dir) {
+  async function* findFiles(dir) {
     const dirents = await readdir(dir, { withFileTypes: true })
     for (const dirent of dirents) {
       const direntName = dirent.name
       const res = resolve(dir, direntName)
       if (dirent.isDirectory()) {
-        yield * findFiles(res)
+        yield* findFiles(res)
       } else {
         if (direntName.startsWith('.batch') && direntName.endsWith('.json')) {
           readBatchConfig(res, dir)
@@ -97,6 +106,7 @@ const findBatchConfigFiles = async parentDirectory => {
       }
     }
   }
+
   // eslint-disable-next-line
   for await (const _ of findFiles(parentDirectory));
 }

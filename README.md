@@ -1,9 +1,7 @@
 # oxpecker
 ### ES Module batching
 
-<sub>_(Oxpecker is the current projectname, not final name)_</sub>
-
-Oxpecker is a library for: 
+Bonita is a library for: 
 ### - Batching ES modules into fewer files
 This is to reduce the number of module imports when using native modules in the browser.
 E.g. A project with 60 files may have a substantial performance gain as 12 files (containing an average of 5 files)
@@ -41,18 +39,18 @@ batch.json files can be placed in any directory and should list files that are t
 Create all _batch-files_ under `./src` using `batch.json`
 
 ```bash
-ox batch ./src
+bon batch ./src
 ```
 
 Minifies all, overriding `batch.json`
 
 ```bash
-ox batch -m ./src
+bon batch -m ./src
 ```
 Ignores minification for all, overriding `batch.json`
 
 ```bash
-ox batch -m=false ./src
+bon batch -m=false ./src
 ```
 Other commands 
 - _-c=true, --comments=true_  : Show comments

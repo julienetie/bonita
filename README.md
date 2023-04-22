@@ -1,32 +1,54 @@
-# Bonita
-### ES Module batching
+# Bonita <sup>`beta`</sup>
+### Import Maps Manager
 
-Bonita is a library for: 
-### - Batching ES modules into fewer files
-This is to reduce the number of module imports when using native modules in the browser.
+Bonita is an import maps manager and front-end build automation tool for native HTML, JS and CSS development.
+Bonita compliments _NPM_ to make _import-maps_ management and build automation streamlined.
+
+## Features
+- **Stand-alone**: Bonita is a modern stand-alone development and build automation tool for native development.
+- **Complimentary** Any front-end build or development setup can be used anterior to Bonita.
+- **Module Batching**: 
+  - Batch files: Preserve the modularity of your development and reduce HTTP requests to an optimal level by dividing your source files into fewer batches.
+  - File hashing: Ensures users only download changes
+  - Granular configs: Each batch is represented by a `.batch.json` file for fine-grain configuration
+
+TBA
+> - **Import Maps**: 
+>  - Multiple maps: Insert selected import maps into multiple parts for multiple pages or layouts
+>  - Insert anywhere: Insert import-maps into HTML or any file that uses an HTML-like syntax _(template-literals, jsx, Svelte, Angular, Vue, Solid etc) 
+>  - Sync hashed batch files: Batch files are automatically synced with Import Maps
+>  - JSON files as import-maps: Manage multiple import maps as individual JSON files.
+>  
+> - **Dependency management**
+>  - NPM: Bonita reads your `package.json` to build source files into the `./bon/` directory which can be used within your import-maps JSON files.
+>  - NPM Alias: Includes shorthand aliases to manage NPM packages optimally.
+>  - CDN: Fetch from a CDN or use a CDN URL (Currently supports esm.sh) 
+>  - Mix resources: Mix NPM and CDN resources
+>
+> - **Development and builds**: 
+>  - Livereload: Build only changed files and batch files
+>  - Localization: Build multiple locales from one source
+>  - Hybrid web app development: Develop and deploy web applications that are both MPAs and SPAs.
+>  - CSS preprocessing: Uses PostCSS and CSS nesting by default. Can be disabled or customized.
+
+## Module Batching
+Module Batching combines modules into fewer modules to optimise HTTP performance as projects grow in size.
 E.g. A project with 60 files may have a substantial performance gain as 12 files (containing an average of 5 files)
+Module batching is an indirect form of code-splitting which eliminate the necessity for bundle based code-splitting.
 
-> ### - Mapping _import-maps_ to HTML documents and alike
-> This enables the population of individual import-maps (json) to any project files containing the data-import-mapper on an _importmap_ script.
-> Multiple maps can be inserted into any file. Files can of course share the same import-maps.
-> Non-HTML files are supported such as server-side pages in front-end JavaScript frameworks.
+### How it works
+A `.batch.json` config file can be placed in any directory within your source code. Each batch-config determines what files to be included as well as where to write the outputted batch file.
 
-> ### Managing Dependencies
-> TBA
-
-Currently the library will only feature module batching.
-
-batch.json files can be placed in any directory and should list files that are typically used on the same page.
+A .batch-config can also be named `.batch-<something>.json` which is ideal if multiple batch-configs should reside in the same directory. 
 
 <sub>batch.json</sub>
 ```javascript
 {
-    "batch-file": "side-menu.js",   // <-- Batched file name
+    "output": "side-menu.js",   // <-- Batched file name
     "minify": false,                // <-- minify (default false)
     "comments": true,               // <-- Show comments (default true)
     "batch": true,                  // <-- Batch ES modules (default true, false will concatenate only)
     "ignore": false,                // <-- Ignore when building (default false)
-    "watch": true,                  // <-- Allow to be watched (default true)
     "invalidate": false,            // <-- Adds a new hash on each build `parseInt((Date.now() + '').substr(4)).toString(36)`  -e9hych.js
     "files": [                      // <-- Files to batch
       "/header/blabla.js",
@@ -36,18 +58,19 @@ batch.json files can be placed in any directory and should list files that are t
      ]
 }
 ```
-Create all _batch-files_ under `./src` using `batch.json`
+To build all _batch files_ under `./src` use:
 
 ```bash
 bon batch ./src
 ```
 
-Minifies all, overriding `batch.json`
+Minify all batch files. This will override the minify settings for each batch config
 
 ```bash
 bon batch -m ./src
 ```
-Ignores minification for all, overriding `batch.json`
+
+Ignores minification options for all batch configurations. 
 
 ```bash
 bon batch -m=false ./src
@@ -57,7 +80,7 @@ Other commands
 - _-n=true, --notice=true_    : Show notice
 - _-b=true, --bundle=true_    : Bundle modules (false will concatenate without bundling)
 - _-i=a,b,c, --ignore=a,b,c_  : Ignore batch.json files
-- _-w=false, --watch=true_    : Watch and batch
+- _-w=false, --watch=true_    : Watch and build
 
 
 MIT 2023 - Julien Etienne 

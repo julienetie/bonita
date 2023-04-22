@@ -44,7 +44,7 @@ A .batch-config can also be named `.batch-<something>.json` which is ideal if mu
 <sub>batch.json</sub>
 ```javascript
 {
-    "output": "side-menu.js",   // <-- Batched file name
+    "output": "side-menu.js",       // <-- Batched file name
     "minify": false,                // <-- minify (default false)
     "comments": true,               // <-- Show comments (default true)
     "batch": true,                  // <-- Batch ES modules (default true, false will concatenate only)

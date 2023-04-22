@@ -39,10 +39,10 @@ const batchFiles = async (
 
   const hash = parseInt((Date.now() + '').slice(4)).toString(36)
   const filename = invalidate ? output.replace(/.([^.]*)$/, `-${hash}.$1`) : output
-  console.log('filename', filename)
+
   const file = resolve(dir, filename)
   let bundle
-  let buildFailed = false
+  // let buildFailed = false
   const input = batchList.map(item => resolve(dir, item))
   try {
     // Input options
@@ -68,13 +68,13 @@ const batchFiles = async (
       format: 'es'
     })
   } catch (error) {
-    buildFailed = true
+    // buildFailed = true
     console.error(error)
   }
   if (bundle) {
     await bundle.close()
   }
-  process.exit(buildFailed ? 1 : 0)
+  // process.exit(buildFailed ? 1 : 0)
 }
 
 export { batchFiles }

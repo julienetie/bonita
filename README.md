@@ -1,21 +1,23 @@
 # Bonita <sup>`beta`</sup>
 ### Import Maps Manager
 
-Bonita is an import maps manager and front-end build automation tool for native HTML, JS and CSS.
-Bonita:
-- Uses _NPM_ as a package manager and optionally _esm.sh_ for CDN derrived imports
-- Only manages JS and CSS, this could be your source code or distribution code depending on your setup
-- Allows you to manage import maps as JSON and will insert them anywhere required across your codebase
+Develop native JavaScript applications using Import Maps
+
+#### Bonita:
+
+- Let's you to manage _import-maps_ as JSON files
+- Uses dependencies as ES modules via _NPM_ and _esm.sh_
+- Work with your source files or distribution files
 
 ## Features
-- **Stand-alone**: Create native websites using over 98% of ES.Next without a module bundler
-- **Complimentary** You can optionally use a module bundler in conjunction with Bonita.
+- **Stand-alone**: 
+  - Create native websites using over 98% of ES.Next without requireing a module bundler (Optional)
 - **Module Batching**: 
-  - Batch files: Preserve the modularity of your development and reduce HTTP requests to an optimal level by dividing your source files into fewer batches.
-  - File hashing: Ensures users only download changes
-  - Granular configs: Each batch is represented by a `.batch.json` file for fine-grain configuration
+  - Batch files: Preserve the modularity of your codebase whilst reducing HTTP requests by dividing your files into fewer batches.
+  - File hashing: Ensures returning users only download changes
+  - Granular configurations: Batch files can be configured using batch-config JSON files 
 
-TBA
+_TBA_
 > - **Import Maps**: 
 >  - Multiple maps: Insert selected import maps into multiple parts for multiple pages or layouts
 >  - Insert anywhere: Insert import-maps into HTML or any file that uses an HTML-like syntax _(template-literals, jsx, Svelte, Angular, Vue, Solid etc) 

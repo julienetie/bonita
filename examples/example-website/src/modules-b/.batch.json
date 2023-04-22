@@ -1,8 +1,0 @@
-{
-    "output": "_module-b.js",
-    "files": [
-        "./four.js",
-        "./five.js",
-        "./six.js"
-    ]
-}

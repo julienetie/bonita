@@ -1,8 +1,0 @@
-{
-    "output-file": "mouse.js",
-    "minify": true,
-    "comments": false,
-    "batch": true,
-    "invalidate": true,
-    "files": [""]
-  }

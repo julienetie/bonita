@@ -2,8 +2,10 @@ import path from 'path'
 import { readdir, readFile } from 'fs/promises'
 import { batchFiles } from './batch-files.js'
 import chokidar from 'chokidar'
+import chalk from 'chalk'
 const { resolve, dirname } = path
 const { isArray } = Array
+
 // import * as url from 'url';
 // const __filename = url.fileURLToPath(import.meta.url);
 // const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -141,13 +143,11 @@ const createBatchFiles = async (directory, { watch }) => {
       workerThreads: true
     })
 
-    console.log('\n*** ox: Watching files for changes...')
     watcher.on('ready', () => {
-      console.log('*** ox: Initial scan complete. Watching for changes...')
+      console.log('\n', chalk.whiteBright('...Watching for changes'))
       watcher.on('change', (path) => {
-        // const batchConfigPath = watchMap.get(path)
-        console.log('change')
-        // readBatchConfig(batchConfigPath)
+        const batchConfigPath = watchMap.get(path)
+        readBatchConfig(batchConfigPath)
       })
     })
   }

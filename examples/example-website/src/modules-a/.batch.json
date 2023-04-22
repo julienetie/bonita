@@ -6,7 +6,7 @@
         "./three.js"
     ],
     "minify": false,
-    "invalidate": true,
+    "invalidate": false,
     "preserve": false,
     "comments": false
 }

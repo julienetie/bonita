@@ -63,7 +63,8 @@ const configureBatching = async (batchConfigPath, jsonConfig, dir) => {
       minify,
       invalidate,
       preserve,
-      comments
+      comments,
+      batchConfigPath
     )
   } else {
     // Concatenate files ES
@@ -73,7 +74,6 @@ const configureBatching = async (batchConfigPath, jsonConfig, dir) => {
 
 const readBatchConfig = async (batchConfigPath) => {
   const dir = dirname(batchConfigPath)
-
   const file = await readFile(batchConfigPath, 'utf8', (err, data) => {
     if (err) {
       console.error(err)

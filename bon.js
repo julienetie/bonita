@@ -6,7 +6,7 @@ const cli = cac()
 {
     // Help message
     cli.version(process.version)
-    cli.option('--type [type]', 'Choose a project type', {
+    cli.option('-w, --watch', 'Watch for changes and build', {
         default: 'node',
     })
     cli.help()

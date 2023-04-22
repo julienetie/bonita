@@ -1,18 +1,23 @@
 # Bonita <sup>`beta`</sup>
 ### Import Maps Manager
 
-Bonita is an import maps manager and front-end build automation tool for native HTML, JS and CSS development.
-Bonita compliments _NPM_ to make _import-maps_ management and build automation streamlined.
+Develop native JavaScript applications using Import Maps
+
+#### Bonita:
+
+- Let's you to manage _import-maps_ as JSON files
+- Uses dependencies as ES modules via _NPM_ and _esm.sh_
+- Work with your source files or distribution files
 
 ## Features
-- **Stand-alone**: Bonita is a modern stand-alone development and build automation tool for native development.
-- **Complimentary** Any front-end build or development setup can be used anterior to Bonita.
+- **Stand-alone**: 
+  - Create native websites using over 98% of ES.Next without requireing a module bundler (Optional)
 - **Module Batching**: 
-  - Batch files: Preserve the modularity of your development and reduce HTTP requests to an optimal level by dividing your source files into fewer batches.
-  - File hashing: Ensures users only download changes
-  - Granular configs: Each batch is represented by a `.batch.json` file for fine-grain configuration
+  - Batch files: Preserve the modularity of your codebase whilst reducing HTTP requests by dividing your files into fewer batches.
+  - File hashing: Ensures returning users only download changes
+  - Granular configurations: Batch files can be configured using batch-config JSON files 
 
-TBA
+_TBA_
 > - **Import Maps**: 
 >  - Multiple maps: Insert selected import maps into multiple parts for multiple pages or layouts
 >  - Insert anywhere: Insert import-maps into HTML or any file that uses an HTML-like syntax _(template-literals, jsx, Svelte, Angular, Vue, Solid etc) 
@@ -38,8 +43,6 @@ Module batching is an indirect form of code-splitting which eliminate the necess
 
 ### How it works
 A `.batch.json` config file can be placed in any directory within your source code. Each batch-config determines what files to be included as well as where to write the outputted batch file.
-
-A .batch-config can also be named `.batch-<something>.json` which is ideal if multiple batch-configs should reside in the same directory. 
 
 <sub>batch.json</sub>
 ```javascript
@@ -82,5 +85,21 @@ Other commands
 - _-i=a,b,c, --ignore=a,b,c_  : Ignore batch.json files
 - _-w=false, --watch=true_    : Watch and build
 
+## Contributors
+
+Clone bonita
+`git clone git@github.com:julienetie/bonita.git`
+
+Clone bontia-mock into the root 
+`cd bonita && git clone git@github.com:julienetie/bonita-mock.git`
+
+Install bonita globally
+`npm i -g`
+
+Batching usage
+`bon batch ./bonita-mock/example-website/src`
+
+Batch with watch usage
+`bon batch ./bonita-mock/example-website/src --watch`
 
 MIT 2023 - Julien Etienne 

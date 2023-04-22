@@ -1,0 +1,12 @@
+{
+    "output": "_module-a.js",
+    "files": [
+        "./one.js",
+        "./two.js",
+        "./three.js"
+    ],
+    "minify": false,
+    "invalidate": false,
+    "preserve": false,
+    "comments": false
+}

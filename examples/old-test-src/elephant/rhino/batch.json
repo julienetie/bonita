@@ -1,0 +1,15 @@
+{
+    "output-file": "rhino.js",
+    "minify": false,
+    "comments": true,
+    "batch": true,
+    "ignore": true,
+    "watch": true,
+    "invalidate": false,
+    "files": [
+      "/header/blabla.js",
+      "header/lala.js",
+      "./feed.js",
+      "nav.js"
+    ]
+  }

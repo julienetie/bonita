@@ -1,0 +1,14 @@
+{
+    "output-file": "lion.js",
+    "minify": false,
+    "comments": true,
+    "batch": true,
+    "ignore": false,
+    "watch": true,
+    "invalidate": false,
+    "files": [
+      "one.js",
+      "two.js",
+      "three.js"
+    ]
+  }

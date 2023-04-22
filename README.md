@@ -44,8 +44,6 @@ Module batching is an indirect form of code-splitting which eliminate the necess
 ### How it works
 A `.batch.json` config file can be placed in any directory within your source code. Each batch-config determines what files to be included as well as where to write the outputted batch file.
 
-A .batch-config can also be named `.batch-<something>.json` which is ideal if multiple batch-configs should reside in the same directory. 
-
 <sub>batch.json</sub>
 ```javascript
 {

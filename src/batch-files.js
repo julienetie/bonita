@@ -4,6 +4,7 @@ import multi from '@rollup/plugin-multi-entry'
 import terser from '@rollup/plugin-terser'
 import cleanup from 'rollup-plugin-cleanup'
 import { readdir, unlink } from 'fs/promises'
+import chalk from 'chalk';
 
 const { resolve, parse } = path
 
@@ -29,7 +30,8 @@ const batchFiles = async (
   minify,
   invalidate,
   preserve,
-  comments
+  comments,
+  batchConfigPath
 ) => {
   const filenameWithoutExt = parse(resolve(dir, output)).name
 
@@ -44,6 +46,18 @@ const batchFiles = async (
   let bundle
   // let buildFailed = false
   const input = batchList.map(item => resolve(dir, item))
+
+  // Write log
+  console.group('\nCreated:', chalk.magenta(output))
+  console.log('-','From config:', chalk.greenBright(batchConfigPath))
+  console.group('-','Encompassing:')
+  input.forEach(inputFile => {
+    console.log('•',chalk.cyan(inputFile))
+  })
+  console.groupEnd('-')
+  console.log('-','Written to:',chalk.yellow(file))
+  console.groupEnd('\nCreated:')
+
   try {
     // Input options
     bundle = await rollup({

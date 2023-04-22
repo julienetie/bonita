@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "description": "Import Maps Manager",
   "bin": {
-    "ox": "./ox.js"
+    "bon": "./bon.js"
   },
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "./node_modules/.bin/eslint ./src",
+    "lint:fix": "./node_modules/.bin/eslint ./src"
   },
   "keywords": [
     "import",

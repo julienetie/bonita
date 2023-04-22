@@ -85,5 +85,21 @@ Other commands
 - _-i=a,b,c, --ignore=a,b,c_  : Ignore batch.json files
 - _-w=false, --watch=true_    : Watch and build
 
+## Contributors
+
+Clone bonita
+`git clone git@github.com:julienetie/bonita.git`
+
+Clone bontia-mock into the root 
+`cd bonita && git clone git@github.com:julienetie/bonita-mock.git`
+
+Install bonita globally
+`npm i -g`
+
+Batching usage
+`bon batch ./bonita-mock/example-website/src`
+
+Batch with watch usage
+`bon batch ./bonita-mock/example-website/src --watch`
 
 MIT 2023 - Julien Etienne 

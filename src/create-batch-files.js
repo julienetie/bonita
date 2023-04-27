@@ -6,9 +6,7 @@ import chalk from 'chalk'
 const { resolve, dirname } = path
 const { isArray } = Array
 
-// import * as url from 'url';
-// const __filename = url.fileURLToPath(import.meta.url);
-// const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 
 const configFilesMap = {}// new Map()
 

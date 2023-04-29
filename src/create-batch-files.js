@@ -6,8 +6,6 @@ import chalk from 'chalk'
 const { resolve, dirname } = path
 const { isArray } = Array
 
-
-
 const configFilesMap = {}// new Map()
 
 const batchConfigDefaults = {

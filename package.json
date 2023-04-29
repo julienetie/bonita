@@ -5,10 +5,13 @@
   "bin": {
     "bon": "./bon.js"
   },
+  "author": "Julien Etienne",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src",
-    "lint:fix": "./node_modules/.bin/eslint ./src"
+    "lint:fix": "./node_modules/.bin/eslint ./src --fix",
+    "lint.staged": "./node_modules/eslint/bin/eslint.js $(git status -s -uno | grep -o -e '[a-zA-Z0-9_.-]*.js')"
   },
   "keywords": [
     "import",
@@ -24,15 +27,17 @@
     "npm",
     "node"
   ],
-  "author": "Julien Etienne",
-  "license": "MIT",
   "devDependencies": {
     "eslint": "^8.38.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "pre-commit": "^1.2.2"
   },
+  "pre-commit": [
+    "lint.staged"
+  ],
   "dependencies": {
     "@rollup/plugin-multi-entry": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",

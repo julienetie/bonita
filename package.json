@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src",
     "lint:fix": "./node_modules/.bin/eslint ./src --fix",
-    "lint.staged": "./node_modules/eslint/bin/eslint.js $(git status -s -uno | grep -o -e '[a-zA-Z0-9_.-]*.js')"
+    "lint.staged": "./node_modules/eslint/bin/eslint.js $(git status -s -uno | grep -o -P '[a-zA-Z0-9_.-]*\\.js$'^C)"
   },
   "keywords": [
     "import",

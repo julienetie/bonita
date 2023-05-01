@@ -1,7 +1,6 @@
 import path from 'path'
 import { writeFile } from 'fs/promises'
 const { resolve } = path
-
 const importMapAttributePattern = /<(script)(?:\s+[^>]*?)*?\s+(data-import-map=["']([^"']*)["']|data-import-map=['"]([^'"]*)['"]).*?>(.*?)<\/\1>/gis
 const importMapCommentPattern = /<!--(?:\s+[^>]*?)?import-map-start:\s*([^\s]+)\s*-->(.*?)(<!--\s*import-map-end:\s*([^\s]+)\s*-->)/gs
 const scriptContentPattern = /(<script(?:\s+[^>]*?)?>)[^<]*(<\/script>)/gis

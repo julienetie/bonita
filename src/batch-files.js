@@ -5,7 +5,6 @@ import terser from '@rollup/plugin-terser'
 import cleanup from 'rollup-plugin-cleanup'
 import { readdir, unlink } from 'fs/promises'
 import chalk from 'chalk'
-
 const { resolve, parse } = path
 
 const removeAllStartingWith = async (dir, filenameWithoutExt) => {

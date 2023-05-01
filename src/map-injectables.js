@@ -9,6 +9,9 @@ const { isArray } = Array
 const injectableFiles = new Map()
 const importMaps = new Map()
 
+
+/* 
+- cliDir        - s - Directory defined by the cli command */
 const readImportMapperJson = async (cliDir = '') => {
   const importMapperJsonPath = resolve(cliDir, 'import-mapper.json')
 
@@ -23,6 +26,9 @@ const readImportMapperJson = async (cliDir = '') => {
   return JSON.parse(importMapperJson)
 }
 
+
+/*
+- importMapPath - s - Directory to import-maps/ */
 const readImportMap = async (importMapPath) => {
   const file = await readFile(importMapPath, 'utf8', (err, data) => {
     if (err) {
@@ -34,6 +40,9 @@ const readImportMap = async (importMapPath) => {
   importMaps.set(basename(importMapPath), file)
 }
 
+
+/*
+- importMapsDir   - s - Directory to import-maps/ */
 const getImportMaps = async importMapsDir => {
   async function * findFiles (dir) {
     const dirents = await readdir(dir, { withFileTypes: true })
@@ -57,6 +66,10 @@ const getImportMaps = async importMapsDir => {
   return importMaps
 }
 
+
+/* 
+- docs            - ?
+- cliDir          - s - Directory defined by the cli command */
 const setInjectables = async (docs, cliDir) => {
   for await (const filePath of docs) { // @todo make docs into async iterable
     const injectableFilePath = resolve(cliDir, filePath)
@@ -72,6 +85,11 @@ const setInjectables = async (docs, cliDir) => {
   return injectableFiles
 }
 
+
+/*
+- o 
+  - watch         - b - Cli watch flag  [-w]
+  - configPath    - b - Cli configuration path [-p] */
 const mapInjectables = async ({ watch, path: configPath }) => {
   const cliDir = resolve(__dirname, '../', configPath) // Remove ../
   const importMapperJson = await readImportMapperJson(cliDir)

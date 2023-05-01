@@ -4,21 +4,33 @@ import { batchFiles } from './batch-files.js'
 import chokidar from 'chokidar'
 import chalk from 'chalk'
 const { resolve, dirname } = path
+const configFilesMap = {}// new Map()
 const { isArray } = Array
 
-const configFilesMap = {}// new Map()
 
+// Default settings for undefined batck config options.
 const batchConfigDefaults = {
-  minify: false,
-  comments: true,
-  batch: true,
-  ignore: false,
-  invalidate: false,
-  preserve: false
+  minify: false,                // If true the batch will be minified
+  comments: true,               // Removes comments for an unminified batch
+  batch: true,                  // Builds the batch by default, if false modules are concatenated
+  ignore: false,                // If true the batch will not be built on `bon batch`
+  invalidate: false,            // If true a cache invalidation hash will be added to the output filename  
+  preserve: false               // If true a new output file will be created without removing the previous
 }
 
+/*
+- batchConfigPath     - s 
+- jsonConfig          - s 
+- dir                 - s */
 const configureBatching = async (batchConfigPath, jsonConfig, dir) => {
-  const config = JSON.parse(jsonConfig)
+  let config
+
+  try {
+    config = JSON.parse(jsonConfig)
+  } catch (e) {
+    alert(e)
+  }
+
   const minify = Object.hasOwn(config, 'minify') ? config.minify : batchConfigDefaults.minify
   const comments = Object.hasOwn(config, 'comments') ? config.comments : batchConfigDefaults.comments
   const batch = Object.hasOwn(config, 'batch') ? config.batch : batchConfigDefaults.batch
@@ -49,7 +61,6 @@ const configureBatching = async (batchConfigPath, jsonConfig, dir) => {
   }
 
   if (ignore === true) {
-    // @todo check flag to override ignore
     return
   }
 
@@ -88,13 +99,13 @@ const readBatchConfig = async (batchConfigPath) => {
  * @param {string} parentDirectory
  */
 const findBatchConfigFiles = async parentDirectory => {
-  async function * findFiles (dir) {
+  async function* findFiles(dir) {
     const dirents = await readdir(dir, { withFileTypes: true })
     for (const dirent of dirents) {
       const direntName = dirent.name
       const res = resolve(dir, direntName)
       if (dirent.isDirectory()) {
-        yield * findFiles(res)
+        yield* findFiles(res)
       } else {
         if (direntName.startsWith('.batch') && direntName.endsWith('.json')) {
           readBatchConfig(res, dir)

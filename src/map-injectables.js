@@ -23,7 +23,13 @@ const readImportMapperJson = async (cliDir = '') => {
     return Buffer.from(data)
   })
 
-  return JSON.parse(importMapperJson)
+  let importMapperData
+  try {
+    importMapperData = JSON.parse(importMapperJson)
+  } catch (e) {
+    alert(e)
+  }
+  return importMapperData
 }
 
 

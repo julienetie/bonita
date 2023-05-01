@@ -10,7 +10,6 @@ const { resolve, parse } = path
 
 const removeAllStartingWith = async (dir, filenameWithoutExt) => {
   const files = await readdir(dir)
-  // @todo refactor into the async loop
   const filteredFiles = files.filter(file => file.startsWith(filenameWithoutExt))
 
   try {
@@ -66,7 +65,7 @@ const batchFiles = async (
         if (/external dependency/.test(message)) return
         console.error(message)
       },
-      external: (a, b, c) => !input.includes(a),
+      external: a => !input.includes(a),
       input,
       plugins: [
         multi(),

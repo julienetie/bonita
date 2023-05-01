@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import cac from 'cac'
 import { createBatchFiles } from './src/create-batch-files.js'
-import { injectImportMaps } from './src/inject-import-maps.js'
+import { mapInjectables } from './src/map-injectables.js'
 const cli = cac()
 
 {
@@ -23,7 +23,7 @@ const cli = cac()
         .command('inject', 'Inject import-maps into placeholders within a given parent directory')
         .option('-w, --watch', 'Watch and batch files on changes')
         .option('-p, --path <path>', 'Defines the import-mapper.json path if not relative to the cli call')
-        .action((parentDirectory, options) => injectImportMaps(parentDirectory, options))
+        .action((parentDirectory, options) => mapInjectables(parentDirectory, options))
 
     cli.parse()
 }

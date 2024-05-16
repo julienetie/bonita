@@ -65,9 +65,9 @@ It will have the following constants:
 A nominator is syntax that wraps HTML content to allow it to be identified by a processor. It begins with `$[` and ends with `]`.
 A nominator can be identified by index, relative to the number of nominators in the document, or by name. 
 
-`$[<h1>Hello World</h1>` Nameless nominator which can be accessed within a processor by its index.
+`$[<h1>Hello World</h1>]` Nameless nominator which can be accessed within a processor by its index.
 
-`$[greeting <h1>Hello World</h1>` Named nominator which can be accessed by both index and name within a processor.
+`$[greeting <h1>Hello World</h1>]` Named nominator which can be accessed by both index and name within a processor.
 
 Nominators are also used for including and excluding content using partial conditional statement syntax.
 

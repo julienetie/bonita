@@ -80,7 +80,9 @@ The reverse applies if the statement is false. The statement is treated as JavaS
 After the IF statement content can optionally be included using nominators with the + or - syntax. 
 
 `$[+ <h2>The answer is true</h2>]`
+
 `$[- <h2>The answer is false</h2>]`
+
 `$[<h2>This will always show </h2>]`
 
 The IF statement does not need to be terminated, it will condition + and - nominators until another IF statement is declared. 

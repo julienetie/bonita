@@ -105,3 +105,30 @@ or a comment of any kind.
 
 ## Custom variables
 Variables are not defined within partial documents; they should be defined in config and can be made to be directly or dynamically accessible.
+
+## Page Partial 
+A page is a partial that lives in the `./src/site/` subdirectory. Pages behave equivalently to partials located in `./partials/`. 
+- `root.html` is the root page of the site and must be located at `./site/root.html`
+- `some-file.html` will be built as a directory named `/some-file/` using an index.html file.
+- `index.html` is treated as standard and served as the index page of it's directory. 
+
+## Bridge Template
+A bridge template functions similarly to a regular page but serves a distinct purpose.
+
+- A bridge template is designed to be processed by the backend (and optionally the frontend).
+- Its primary role is to represent the initial state of the page for SEO purposes, at a minimum.
+- The backend platform is responsible for populating certain placeholders within the template.
+
+The main advantage of a bridge template is that it allows the HTML for the backend to be managed within the frontend system, standardizing the context in which the HTML is handled.
+Bridge templates are for dynamic pages that will be rendered by a backend platform.
+
+- A dynamic path can feature one or several bridge templates. 
+- A bridge template should be suffixed with bridge. 
+
+`some-file.bridge.html`
+
+The ampersand symbol should be used to denote a dummy placeholder to be replaced by the backend: 
+
+`{{ &total-value }}`
+
+Other values referencing the file system will be rendered as normal.

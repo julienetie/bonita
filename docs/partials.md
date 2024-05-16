@@ -103,8 +103,8 @@ $[default: <div>All fruits</div>]
 Default is a keyword which renders if there are no matches. Switch statements need have no spaces and are terminated by the last space
 or a comment of any kind.
 
-## Custom variables
-Variables are not defined within partial documents; they should be defined in config and can be made to be directly or dynamically accessible.
+> ### Custom variables
+> Variables are not defined within partial documents; they should be defined in config and can be made to be directly or dynamically accessible.
 
 ## Page Partial 
 A page is a partial that lives in the `./src/site/` subdirectory. Pages behave equivalently to partials located in `./partials/`. 

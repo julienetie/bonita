@@ -108,9 +108,9 @@ or a comment of any kind.
 
 ## Page Partial 
 A page is a partial that lives in the `./src/site/` subdirectory. Pages behave equivalently to partials located in `./partials/`. 
-- `root.html` is the root page of the site and must be located at `./site/root.html`
-- `some-file.html` will be built as a directory named `/some-file/` using an index.html file.
-- `index.html` is treated as standard and served as the index page of it's directory. 
+- `root.html` is the root-page of the site and must be located at `./site/root.html` _Sub projects do not have root.html pages_
+- `some-file.html` Is a leaf-page, which will be built as a directory named `/some-file/` using an index.html file.
+- `index.html` is treated as the standard index-page of it's directory. 
 
 ## Bridge Template
 A bridge template functions similarly to a regular page but serves a distinct purpose.

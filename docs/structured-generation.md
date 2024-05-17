@@ -39,21 +39,38 @@ Both types of schemas use the same syntax.
    "categories": {
      ...                           // Nested object categories terminated by null
    },
-   "permalink":  “/[$_locale]/[dateFormat]/[categories:nested]/[title]/”,
-   "processor-map: {
+   "permalink":  “/[$_locale]/[dateFormat]/[categories:nested]/[title]/”,  // Defines the structure of the site generation
+   "processorMap: {
          "[$_locale]": "loaleProcessor",
          "[dateFormat]": "listPageProcessor",
          "[title]": "articleProcessor",
          "[categories::nested]": "listPageProcessor",
+         // or
+         "[categories::2]": "thirdLevelProcessor",  // Targets all 3rd level categories
+         //
+         "[categories.fruits.apples]", // Specifically targets the apples categories  
    }
 }
 ```
-The main job of a processor in regards to a struct is to incorporate partials to build the desired page.
+The main job of a processor in regards to a struct is to incorporate partials to create the desired HTML page.
+The page can be an article, multiple articles, a list, excerpts, there is not limitations. Any type of static blog can be created using a struct.
+
+#### Required metadata
+With the exception of permalink and processorMap, all keys included in the struct are required for each post. 
+
+#### Auto data
+When creating an article post, by putting "auto" as the value for "dateFormat" and "timeFormat" and enabling _config.structured.allowAutoDateAndTime as true.
+
+#### Variants (list)
+Variant data is defined in the config, beginnign with an underscore. A variant list can be included using $_variant_name.
+
 
 
 #### Slashes in dateFormat
 #### Slashes in timeFormat
 #### ::nested directive 
 #### ::0 , ::1, ::2 ...
+#### categories.zero.one.two.three...
 #### [] brackets
+A bracked indicates a variant-list or nested object. It also serves as the variable passed down for relative paths.
 

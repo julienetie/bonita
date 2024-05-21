@@ -14,7 +14,8 @@ The configuration file can sometimes become large, therefore you can extend the 
 ### Mandatory settings
 ```javascript
 {
-  "project-name: "",                                     // The name of the project or sub project
+  "project-name: "",                                    // The name of the project or sub project
+  "main-project-dir": "../main-project-dir",            // Only required for sub-projects 
   ...  
 }
 ```

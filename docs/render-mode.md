@@ -11,3 +11,4 @@ Headless rendering is processed after all static templates have been generated.
 
 All pages can have headless rendering by setting `config.rendering.headless` to true or by specifying a whitelist of pages to include.
 
+(Likely use [Astral](https://astral.deno.dev/guides/attributes/) for headless rendering)

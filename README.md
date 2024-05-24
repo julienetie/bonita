@@ -1,4 +1,4 @@
-# Bonita <sup>`beta`</sup>
+# Bonita <sup>`WIP`</sup>
 ### Import Maps Manager
 
 Develop native JavaScript applications using Import Maps

@@ -75,4 +75,5 @@ When codebases become highly modular, production builds will benefit from batchi
 
 ### The state of Bonita
 Bonita is work in progress, please reach out if you are intrested in collaborating.
+
 MIT © Wavefront, Julien Etienne 2024

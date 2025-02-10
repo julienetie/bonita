@@ -1,5 +1,5 @@
 # Render Mode 
-Bonita has who modes for rendering HTML:
+Bonita has two modes for rendering HTML:
 
 - **Template rendering**: Generates static HTML from partials and processors.
 - **Headless rendering**: Generates static HTML and renders the JavaScript in a headless browser (Chrome).

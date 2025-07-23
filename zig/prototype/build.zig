@@ -4,9 +4,8 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    // Create an executable instead of a static library
- const exe = b.addExecutable(.{
-        .name = "quickjs",
+    const exe = b.addExecutable(.{
+        .name = "bonita-prototype",
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,

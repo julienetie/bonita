@@ -2,3 +2,5 @@
 npm-debug.log*
 node_modules/
 bonita-mock/
+zig/prototype/quickjs
+zig/prototype/.zig-cache

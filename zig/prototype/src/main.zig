@@ -23,7 +23,7 @@ const UserData = struct {
 // Function to convert a JSValue object to a UserData struct
 fn jsObjectToStruct(ctx: *c.JSContext, obj: c.JSValue) UserData {
     var data = UserData.init();
-    
+
     // Extract 'id' (integer)
     const id_val = c.JS_GetPropertyStr(ctx, obj, "id");
     if (c.JS_IsNumber(id_val) != 0) {
@@ -69,7 +69,7 @@ pub fn main() !void {
     defer c.JS_FreeContext(ctx);
 
     // Load the user script (user.js)
-    const file = try std.fs.cwd().openFile("user.js", .{});
+    const file = try std.fs.cwd().openFile("sandbox/processors/manipulate-data.js", .{});
     defer file.close();
 
     // Read the entire file into a buffer

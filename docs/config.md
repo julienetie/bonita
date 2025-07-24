@@ -30,3 +30,15 @@ The configuration file can sometimes become large, therefore you can extend the 
   }
 }
 ```
+
+### Site Structure 
+Choose what determines the structure of the website by default:
+- site
+- content
+- processors
+```js
+{
+  "site-structure": "site"
+}
+```
+

@@ -3,7 +3,7 @@ There are two ways to define a site:
 - File-system Generation: Create a file-system representation of the site
 - Structured Generation: Create a schema that each article and path component adheres to
 
-Structured generation allows you to define a schema for article metadata so that unstructured articles ccan be structured when built.
+Structured generation allows you to define a schema for article metadata so that unstructured articles can be organized when created.
 This is ideal for creating blogs and other generative site structures.
 
 ### Structured site formation

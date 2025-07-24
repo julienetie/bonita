@@ -1,4 +1,5 @@
 const std = @import("std");
+const cliArgs = @import("cli-args.zig");
 const c = @cImport({
     @cInclude("quickjs.h");
     @cInclude("quickjs-libc.h");
@@ -54,7 +55,32 @@ fn jsObjectToStruct(ctx: *c.JSContext, obj: c.JSValue) UserData {
     return data;
 }
 
+fn printHelp() void {
+    std.debug.print(
+        \\Usage:
+        \\  --root <path> or -r <path>  Set the root path
+        \\  --help, -h, help            Show this help message
+        \\
+    , .{});
+}
+
 pub fn main() !void {
+    const allocator = std.heap.page_allocator;
+    const cli_result = try cliArgs.cliArgs(allocator);
+
+    if (cli_result.help) {
+        printHelp();
+        return;
+    }
+
+    // std.debug.print("{}", .{cli_result});
+
+    // if (cli_result.root_path) |path| {
+    //     std.debug.print("Root path: {s}\n", .{path});
+    // } else {
+    //     std.debug.print("No root path provided. Use --help for usage.\n", .{});
+    // }
+
     // Initialize QuickJS runtime and context
     const rt = c.JS_NewRuntime() orelse {
         std.debug.print("Error: Could not create JS runtime\n", .{});
@@ -74,7 +100,7 @@ pub fn main() !void {
 
     // Read the entire file into a buffer
     const file_size = try file.getEndPos();
-    const allocator = std.heap.page_allocator;
+    // const allocator = std.heap.page_allocator;
     const script = try allocator.alloc(u8, @intCast(file_size + 1));
     defer allocator.free(script);
 

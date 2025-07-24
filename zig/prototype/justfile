@@ -1,5 +1,11 @@
-build: 
-   zig build --summary all
-
 run:
+   @echo -e "\n[[ Build ]]\n"
+   zig build --summary all
+   @echo -e "\n[[ Run ]]\n"
    time ./zig-out/bin/bonita-prototype
+
+walk *FLAGS:
+   @echo -e "\n[[ Build ]]\n"
+   zig build --summary all
+   @echo -e "\n[[ Run ]]\n"
+   time ./zig-out/bin/bonita-prototype {{FLAGS}}

@@ -69,7 +69,7 @@ at any part of the application.
 ### What is a Processor
 A processor is a JavaScript or TypeScript function used to intercept paths, text content, and pages to customize how HTML is rendered. Most of the logic involved in creating a website or web application in Bonita will be in the form of processors. There is no extensive API, as you can manipulate HTML using JavaScript or TypeScript. HTML manipulation in Bonita is done through string manipulation in JavaScript or TypeScript. Processors are executed using the Deno JavaScript runtime.
 
-### Creating efficinet websites at scale
+### Creating efficient websites at scale
 Import Maps allow for almost seamless development. When a JavaScript file is changed, a hash is created for invalidation based on the content of the file. Changes are only reflected in the distributed file and Import Maps that reference the URL. Because only one file changes at a time, the number of JavaScript files within a codebase will likely have a negligible effect on development speeds.
 
 When codebases become highly modular, production builds will benefit from batching files to reduce the number of modules in the distribution, thereby reducing the number of HTTP requests for the user. Bonita features the ability to batch JavaScript and TypeScript files when production performance becomes a concern.

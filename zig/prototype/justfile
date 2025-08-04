@@ -9,3 +9,9 @@ walk *FLAGS:
    zig build --summary all
    @echo -e "\n[[ Run ]]\n"
    time ./zig-out/bin/bonita-prototype {{FLAGS}}
+
+serve-site:
+   http-server sandbox/site -p 1111
+
+serve-dist:
+   http-server sandbox/dist -p 2222

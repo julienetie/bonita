@@ -5,13 +5,11 @@ const c = @cImport({
     @cInclude("quickjs-libc.h");
 });
 
-// Define a struct to hold the parsed data
 const UserData = struct {
     id: i32,
     name: [64]u8,
     score: f64,
 
-    // Initialize with default values
     pub fn init() UserData {
         return .{
             .id = 0,
@@ -21,31 +19,27 @@ const UserData = struct {
     }
 };
 
-// Function to convert a JSValue object to a UserData struct
 fn jsObjectToStruct(ctx: *c.JSContext, obj: c.JSValue) UserData {
     var data = UserData.init();
 
-    // Extract 'id' (integer)
     const id_val = c.JS_GetPropertyStr(ctx, obj, "id");
     if (c.JS_IsNumber(id_val) != 0) {
         _ = c.JS_ToInt32(ctx, &data.id, id_val);
     }
     c.JS_FreeValue(ctx, id_val);
 
-    // Extract 'name' (string)
     const name_val = c.JS_GetPropertyStr(ctx, obj, "name");
     if (c.JS_IsString(name_val) != 0) {
         const name = c.JS_ToCString(ctx, name_val);
         if (name) |n| {
             const len = @min(std.mem.len(n), data.name.len - 1);
             @memcpy(data.name[0..len], n[0..len]);
-            data.name[len] = 0; // Ensure null-termination
+            data.name[len] = 0;
             c.JS_FreeCString(ctx, n);
         }
     }
     c.JS_FreeValue(ctx, name_val);
 
-    // Extract 'score' (double)
     const score_val = c.JS_GetPropertyStr(ctx, obj, "score");
     if (c.JS_IsNumber(score_val) != 0) {
         _ = c.JS_ToFloat64(ctx, &data.score, score_val);
@@ -73,15 +67,6 @@ pub fn main() !void {
         return;
     }
 
-    // std.debug.print("{}", .{cli_result});
-
-    // if (cli_result.root_path) |path| {
-    //     std.debug.print("Root path: {s}\n", .{path});
-    // } else {
-    //     std.debug.print("No root path provided. Use --help for usage.\n", .{});
-    // }
-
-    // Initialize QuickJS runtime and context
     const rt = c.JS_NewRuntime() orelse {
         std.debug.print("Error: Could not create JS runtime\n", .{});
         return error.RuntimeCreationFailed;
@@ -89,25 +74,21 @@ pub fn main() !void {
     defer c.JS_FreeRuntime(rt);
 
     const ctx = c.JS_NewContext(rt) orelse {
-        std.debug.print("Error: Could not create JS context\n", .{});
+        std.debug.print("Error: Could not create JS conntext\n", .{});
         return error.ContextCreationFailed;
     };
     defer c.JS_FreeContext(ctx);
 
-    // Load the user script (user.js)
     const file = try std.fs.cwd().openFile("sandbox/processors/manipulate-data.js", .{});
     defer file.close();
 
-    // Read the entire file into a buffer
     const file_size = try file.getEndPos();
-    // const allocator = std.heap.page_allocator;
     const script = try allocator.alloc(u8, @intCast(file_size + 1));
     defer allocator.free(script);
 
     _ = try file.readAll(script[0..file_size]);
     script[file_size] = 0;
 
-    // Evaluate the user script
     const result = c.JS_Eval(ctx, script.ptr, file_size, "user.js", c.JS_EVAL_TYPE_GLOBAL);
     if (c.JS_IsException(result) != 0) {
         const exception = c.JS_GetException(ctx);
@@ -121,7 +102,6 @@ pub fn main() !void {
         return error.ScriptEvaluationFailed;
     }
 
-    // Prepare JSON data to pass to the function
     const json_data = "{\"id\": 1, \"name\": \"Alice\", \"score\": 95.5}";
     const global_obj = c.JS_GetGlobalObject(ctx);
     const func = c.JS_GetPropertyStr(ctx, global_obj, "manipulateData");
@@ -133,7 +113,6 @@ pub fn main() !void {
         return error.FunctionNotFound;
     }
 
-    // Convert JSON string to a JSValue object
     const json_val = c.JS_ParseJSON(ctx, json_data, json_data.len, "<input>");
     if (c.JS_IsException(json_val) != 0) {
         std.debug.print("Error parsing JSON data\n", .{});
@@ -141,7 +120,6 @@ pub fn main() !void {
     }
     defer c.JS_FreeValue(ctx, json_val);
 
-    // Call the JavaScript function with the JSON data
     var args = [_]c.JSValue{json_val};
     const ret = c.JS_Call(ctx, func, global_obj, 1, &args);
     if (c.JS_IsException(ret) != 0) {
@@ -157,10 +135,8 @@ pub fn main() !void {
     }
     defer c.JS_FreeValue(ctx, ret);
 
-    // Convert the returned JSValue object to a UserData struct
     const user_data = jsObjectToStruct(ctx, ret);
 
-    // Print the values of the struct
     std.debug.print("ID: {d}\n", .{user_data.id});
     std.debug.print("Name: {s}\n", .{&user_data.name});
     std.debug.print("Score: {d:.2}\n", .{user_data.score});
